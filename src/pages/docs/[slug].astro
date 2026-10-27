@@ -1,0 +1,44 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import DocsNav from "../../components/DocsNav.astro";
+import Icon from "../../components/Icon.astro";
+import { guides } from "../../data/guides";
+export function getStaticPaths() {
+  return guides.map((guide, index) => ({
+    params: { slug: guide.slug },
+    props: { guide, index },
+  }));
+}
+const { guide, index } = Astro.props;
+const next = guides[(index + 1) % guides.length];
+---
+
+<Layout title={`${guide.title} — iCheck Docs`} description={guide.description}>
+  <div class="container docs-shell">
+    <DocsNav />
+    <article class="guide">
+      <p class="breadcrumb">
+        <a href="/docs/">Documentation</a> / {guide.category.toLowerCase()}
+      </p>
+      <h1>{guide.title}</h1>
+      <div class="guide-body" set:html={guide.content} />
+      <div class="guide-source">
+        Based on the project documentation, reviewed 27 October 2026.
+        <br />
+        <a
+          href={`https://github.com/beautiful1112/iCheck/blob/main/docs/${guide.source}`}
+        >
+          Read the detailed source guide
+          <Icon name="external" size={12} />
+        </a>
+      </div>
+      <nav class="guide-bottom" aria-label="Continue reading">
+        <a href="/docs/">← All guides</a>
+        <a href={`/docs/${next.slug}/`}>
+          {next.title}
+          <Icon name="arrow" size={15} />
+        </a>
+      </nav>
+    </article>
+  </div>
+</Layout>

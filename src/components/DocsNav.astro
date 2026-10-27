@@ -1,0 +1,29 @@
+---
+import { guides } from "../data/guides";
+---
+
+<aside class="docs-nav" aria-label="Documentation navigation">
+  <p class="eyebrow">EXPLORE ICHECK</p>
+  <a
+    href="/docs/"
+    aria-current={Astro.url.pathname === "/docs/" ? "page" : undefined}
+  >
+    Overview & search
+  </a>
+  {guides.map((guide) => (
+    <a
+      href={`/docs/${guide.slug}/`}
+      aria-current={
+        Astro.url.pathname === `/docs/${guide.slug}/` ? "page" : undefined
+      }
+    >
+      {guide.title}
+    </a>
+  ))}
+  <a
+    class="source-link"
+    href="https://github.com/beautiful1112/iCheck/tree/main/docs"
+  >
+    Full project documentation ↗
+  </a>
+</aside>

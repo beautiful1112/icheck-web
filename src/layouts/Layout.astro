@@ -1,0 +1,157 @@
+---
+import Icon from "../components/Icon.astro";
+import "../styles/global.css";
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+}
+const {
+  title = "iCheck — AI-Native Infrastructure Operations",
+  description = "Observe. Understand. Act. Meet iCheck: an AI operator and capability builder for infrastructure monitoring, evidence-led investigations, and reviewed operations.",
+  noindex = false,
+} = Astro.props;
+const canonical = Astro.site
+  ? new URL(Astro.url.pathname, Astro.site).href
+  : undefined;
+const image = Astro.site ? new URL("/social.png", Astro.site).href : undefined;
+const isDocs = Astro.url.pathname.startsWith("/docs");
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "iCheck",
+  applicationCategory: "IT operations software",
+  operatingSystem: "Linux",
+  description,
+  ...(Astro.site ? { url: Astro.site.href } : {}),
+  codeRepository: "https://github.com/beautiful1112/iCheck",
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f8faf9" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    {canonical && <link rel="canonical" href={canonical} />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="iCheck" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    {image && <meta property="og:image" content={image} />}
+    {image && (
+      <meta
+        property="og:image:alt"
+        content="iCheck — Observe. Understand. Act. AI-native infrastructure operations."
+      />
+    )}
+    <meta name="twitter:card" content="summary_large_image" />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(schema).replace(/</g, "\\u003c")}
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">
+      Skip to content
+    </a>
+    <header class="site-header">
+      <nav class="container nav" aria-label="Main navigation">
+        <a href="/" class="brand" aria-label="iCheck home">
+          <span class="brand-symbol">
+            <Icon name="pulse" size={23} />
+          </span>
+          iCheck<span class="brand-dot">.</span>
+        </a>
+        <div class="nav-links" id="nav-links">
+          <a href="/#platform">Platform</a>
+          <a href="/#how-it-works">How it works</a>
+          <a href="/#integrations">Integrations</a>
+          <a href="/docs/" aria-current={isDocs ? "page" : undefined}>
+            Docs
+          </a>
+        </div>
+        <a
+          class="nav-github"
+          href="https://github.com/beautiful1112/iCheck"
+          aria-label="iCheck on GitHub"
+        >
+          <Icon name="github" size={18} />
+          <span>GitHub</span>
+          <Icon name="external" size={13} />
+        </a>
+        <button
+          class="menu-toggle"
+          aria-controls="nav-links"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span></span>
+          <span></span>
+        </button>
+      </nav>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="container footer-top">
+        <div>
+          <a href="/" class="brand">
+            <span class="brand-symbol">
+              <Icon name="pulse" size={23} />
+            </span>
+            iCheck<span class="brand-dot">.</span>
+          </a>
+          <p>Observe. Understand. Act.</p>
+        </div>
+        <div class="footer-links">
+          <a href="/docs/">Documentation</a>
+          <a href="https://github.com/beautiful1112/iCheck">
+            GitHub <span aria-hidden="true">↗</span>
+          </a>
+          <a href="https://github.com/beautiful1112/iCheck/issues">
+            Feedback <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+      <div class="container footer-bottom">
+        <span>Built for the people behind the infrastructure.</span>
+        <span class="preview-label">
+          <i></i> Engineering Preview v0.1
+        </span>
+      </div>
+    </footer>
+    <script>
+      const menu = document.querySelector<HTMLButtonElement>(".menu-toggle");
+      const links = document.querySelector(".nav-links");
+      const closeMenu = () => {
+        menu?.setAttribute("aria-expanded", "false");
+        links?.classList.remove("is-open");
+      };
+      menu?.addEventListener("click", () => {
+        const open = menu.getAttribute("aria-expanded") !== "true";
+        menu.setAttribute("aria-expanded", String(open));
+        links?.classList.toggle("is-open", open);
+      });
+      links
+        ?.querySelectorAll("a")
+        .forEach((link) => link.addEventListener("click", closeMenu));
+      document.addEventListener("keydown", (event) => {
+        if (
+          event.key === "Escape" &&
+          menu?.getAttribute("aria-expanded") === "true"
+        ) {
+          closeMenu();
+          menu.focus();
+        }
+      });
+    </script>
+  </body>
+</html>

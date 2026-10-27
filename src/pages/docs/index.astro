@@ -1,0 +1,140 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import DocsNav from "../../components/DocsNav.astro";
+import Icon from "../../components/Icon.astro";
+import { guides } from "../../data/guides";
+---
+
+<Layout
+  title="Documentation & Guides — iCheck"
+  description="Search iCheck's public guides. Explore installation, AI Operator, Capability Studio, monitoring integrations, and engineering preview status."
+>
+  <div class="container docs-header">
+    <p class="eyebrow">THE ICHECK FIELD GUIDE</p>
+    <h1>A good place to start.</h1>
+    <p>Understand the platform. Find your next step.</p>
+  </div>
+  <div class="container docs-shell">
+    <DocsNav />
+    <div>
+      <form role="search" id="guide-search" aria-label="Search public guides">
+        <label class="search-box" for="search">
+          <Icon name="search" size={20} />
+          <input
+            type="search"
+            id="search"
+            name="q"
+            aria-label="Search guides"
+            placeholder="Search guides, features, integrations…"
+            autocomplete="off"
+            aria-describedby="search-hint"
+          />
+          <span class="mono" aria-hidden="true">
+            /
+          </span>
+        </label>
+      </form>
+      <p class="search-hint" id="search-hint">
+        Search these public guides, including their contents. Try “MCP”,
+        “Grafana”, or “install”.
+      </p>
+      <p
+        class="search-count"
+        id="search-count"
+        role="status"
+        aria-live="polite"
+      >
+        {guides.length} GUIDES
+      </p>
+      <div class="guide-cards">
+        {guides.map((guide) => (
+          <a
+            class="guide-card"
+            href={`/docs/${guide.slug}/`}
+            data-search={`${guide.title} ${guide.description} ${guide.keywords} ${guide.content.replace(/<[^>]*>/g, " ")}`.toLowerCase()}
+          >
+            <span class="mono">{guide.category}</span>
+            <h2>{guide.title}</h2>
+            <p>{guide.description}</p>
+            <span class="card-arrow">
+              <Icon name="arrow" size={20} />
+            </span>
+          </a>
+        ))}
+      </div>
+      <p id="no-results" class="no-results" hidden>
+        No guides match that search. Try a broader term, such as “monitoring”,
+        “tools”, or “Ubuntu”.
+      </p>
+      <noscript>
+        <p class="search-hint">
+          Guide filtering needs JavaScript. All public guides are listed above
+          and remain readable without it.
+        </p>
+      </noscript>
+    </div>
+  </div>
+  <script>
+    const input = document.querySelector<HTMLInputElement>("#search");
+    const form = document.querySelector("#guide-search");
+    const cards = [
+      ...document.querySelectorAll<HTMLAnchorElement>(".guide-card"),
+    ];
+    function filterGuides() {
+      const query = input?.value.trim().toLowerCase() ?? "";
+      const terms = query.split(/\s+/).filter(Boolean);
+      let count = 0;
+      cards.forEach((card) => {
+        const matches = terms.every((term) =>
+          card.dataset.search?.includes(term),
+        );
+        card.hidden = !matches;
+        if (matches) count++;
+      });
+      const status = document.querySelector("#search-count");
+      if (status)
+        status.textContent = `${count} ${count === 1 ? "GUIDE" : "GUIDES"}${query ? " FOUND" : ""}`;
+      const empty = document.querySelector<HTMLElement>("#no-results");
+      if (empty) empty.hidden = count > 0;
+      const params = new URLSearchParams(window.location.search);
+      if (query) params.set("q", input?.value.trim() ?? "");
+      else params.delete("q");
+      const nextQuery = params.toString();
+      window.history.replaceState(
+        null,
+        "",
+        `${window.location.pathname}${nextQuery ? `?${nextQuery}` : ""}`,
+      );
+    }
+    if (input) {
+      input.value = new URLSearchParams(window.location.search).get("q") ?? "";
+      filterGuides();
+    }
+    input?.addEventListener("input", filterGuides);
+    form?.addEventListener("submit", (event) => {
+      event.preventDefault();
+      filterGuides();
+    });
+    document.addEventListener("keydown", (event) => {
+      const editing =
+        event.target instanceof HTMLElement &&
+        (event.target.matches("input, textarea, select") ||
+          event.target.isContentEditable);
+      if (
+        event.key === "/" &&
+        !editing &&
+        !event.ctrlKey &&
+        !event.metaKey &&
+        !event.altKey
+      ) {
+        event.preventDefault();
+        input?.focus();
+      }
+      if (event.key === "Escape" && event.target === input) {
+        if (input) input.value = "";
+        filterGuides();
+        input?.blur();
+      }
+    });
+  </script>
+</Layout>

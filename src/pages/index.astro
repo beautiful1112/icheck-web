@@ -1,0 +1,381 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Icon from "../components/Icon.astro";
+import WorkflowDemo from "../components/WorkflowDemo.astro";
+const integrations = [
+  "Prometheus",
+  "Grafana",
+  "Zabbix",
+  "SolarWinds / Orion",
+  "MCP",
+];
+const questions = [
+  {
+    q: "What is iCheck?",
+    a: "iCheck is an AI-native infrastructure operations project. It brings an AI Operator, Capability Studio, monitoring integrations, and reviewed workflows together to help engineers investigate infrastructure and build reusable operational capabilities.",
+  },
+  {
+    q: "Does iCheck replace Prometheus or Grafana?",
+    a: "Prometheus collects metrics and Grafana displays them. iCheck builds on that foundation with AI investigations, source-attributed evidence, and tools for creating monitoring templates and reviewed dashboard proposals.",
+  },
+  {
+    q: "Can I run it on my own infrastructure?",
+    a: "Yes. The native preview installer targets a dedicated, freshly installed Ubuntu 24.04 x86_64 server with systemd. It needs at least 3 GiB RAM, 10 GiB free disk space, and network access for dependencies. Docker is not required. See the getting started guide for the evaluation boundaries.",
+  },
+  {
+    q: "Is it ready for production?",
+    a: "iCheck is currently Engineering Preview v0.1. Evaluate it in a controlled lab. Live vendor and device qualification, notification delivery, and broader production readiness require separate validation. Read the preview status before installing.",
+  },
+  {
+    q: "Do I need an AI provider?",
+    a: "AI features require a provider and credentials that you configure. No paid model or search provider is preconfigured. Provider credentials, device access, and automatic investigation policies are separate setup choices.",
+  },
+];
+---
+
+<Layout>
+  <section class="hero container">
+    <a class="announcement" href="/docs/preview-status/">
+      <span class="status-dot"></span>Engineering Preview v0.1
+      <span class="announcement-divider"></span>Built in the open
+      <Icon name="arrow" size={15} />
+    </a>
+    <div class="hero-heading">
+      <div>
+        <p class="eyebrow">
+          <span class="eyebrow-line"></span>AI-NATIVE INFRASTRUCTURE OPERATIONS
+        </p>
+        <h1>
+          Your infrastructure.
+          <br />A clearer{" "}
+          <span class="accent-word">
+            next step
+            <svg viewBox="0 0 360 13" aria-hidden="true">
+              <path d="M2 10Q140-3 356 6" />
+            </svg>
+          </span>
+          .
+        </h1>
+      </div>
+      <div class="hero-description">
+        <p>
+          Turn monitoring signals into understanding.
+          <br class="desktop-break" /> Investigate with AI, build your own
+          capabilities,
+          <br class="desktop-break" /> and keep every next step in human hands.
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="/docs/getting-started/">
+            Explore iCheck
+            <Icon name="arrow" size={18} />
+          </a>
+          <a class="text-link" href="https://github.com/beautiful1112/iCheck">
+            <Icon name="github" size={18} />
+            View on GitHub
+          </a>
+        </div>
+        <p class="hero-footnote">Self-hosted. Extensible. Evidence-led.</p>
+      </div>
+    </div>
+    <WorkflowDemo />
+    <div class="integration-strip">
+      <p>
+        Works with the tools
+        <br />
+        you already know
+      </p>
+      <div>
+        {integrations.map((name, i) => (
+          <span>
+            <span
+              class:list={["integration-mark", `mark-${i}`]}
+              aria-hidden="true"
+            >
+              {["◒", "◉", "Z", "≋", "⌘"][i]}
+            </span>
+            {name}
+          </span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="platform-section section-pad" id="platform">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">FROM SIGNAL TO UNDERSTANDING</p>
+          <h2>
+            More context.
+            <br />
+            Less guesswork.
+          </h2>
+        </div>
+        <p>
+          Bring your monitoring, investigation, and operational knowledge into
+          one connected workflow.
+        </p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature feature-operator">
+          <div class="feature-top">
+            <span class="feature-icon">
+              <Icon name="spark" size={23} />
+            </span>
+            <span class="mono">01 / INVESTIGATE</span>
+          </div>
+          <h3>
+            An operator that
+            <br />
+            shows its work.
+          </h3>
+          <p>
+            Ask a question about your infrastructure. Follow scoped tool calls,
+            source-attributed evidence, and the reasoning behind the next step.
+          </p>
+          <a class="text-link" href="/docs/ai-operator/">
+            Meet AI Operator
+            <Icon name="arrow" size={17} />
+          </a>
+          <div class="feature-snippet">
+            <span class="snippet-prompt">
+              › Why is this interface alerting?
+            </span>
+            <span>
+              <i class="mini-check">✓</i>Review available metric history
+            </span>
+            <span>
+              <i class="mini-check">✓</i>Inspect authorized device evidence
+            </span>
+            <span class="snippet-pending">○ Keep missing evidence visible</span>
+          </div>
+        </article>
+        <article class="feature">
+          <div class="feature-top">
+            <span class="feature-icon">
+              <Icon name="grid" size={23} />
+            </span>
+            <span class="mono">02 / BUILD</span>
+          </div>
+          <h3>
+            Your expertise.
+            <br />
+            Made reusable.
+          </h3>
+          <p>
+            Describe a collector, workflow, or MCP tool in Capability Studio.
+            Review, validate, version, and publish capabilities you can use
+            again.
+          </p>
+          <a class="text-link" href="/docs/capability-studio/">
+            Explore Capability Studio
+            <Icon name="arrow" size={17} />
+          </a>
+          <div class="capability-tags">
+            <span>Collectors</span>
+            <span>MCP servers</span>
+            <span>Workflows</span>
+            <span>Skills</span>
+          </div>
+          <div class="version-flow mono">
+            <span>Draft</span>
+            <b>→</b>
+            <span>Validate</span>
+            <b>→</b>
+            <span class="version-published">Publish</span>
+          </div>
+        </article>
+        <article class="feature">
+          <div class="feature-top">
+            <span class="feature-icon">
+              <Icon name="shield" size={23} />
+            </span>
+            <span class="mono">03 / STAY IN CONTROL</span>
+          </div>
+          <h3>
+            Clear scope.
+            <br />
+            Explicit review.
+          </h3>
+          <p>
+            Keep target access, credentials, and permissions tied to the
+            operation. Review proposed changes and retain versions and evidence.
+          </p>
+          <a class="text-link" href="/docs/ai-operator/#review-and-scope">
+            Understand the controls
+            <Icon name="arrow" size={17} />
+          </a>
+          <div class="control-list">
+            <span>
+              <Icon name="check" size={15} />
+              Scoped access
+            </span>
+            <span>
+              <Icon name="check" size={15} />
+              Reviewed proposals
+            </span>
+            <span>
+              <Icon name="check" size={15} />
+              Retained evidence
+            </span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="container ecosystem-section section-pad" id="integrations">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">BUILD ON YOUR EXISTING STACK</p>
+        <h2>
+          Keep your tools.
+          <br />
+          Connect the dots.
+        </h2>
+      </div>
+      <p>
+        iCheck is the AI operator and capability builder. Your monitoring stack
+        stays the foundation.
+      </p>
+    </div>
+    <div class="ecosystem-grid">
+      <div
+        class="stack-diagram"
+        aria-label="Monitoring sources connect to iCheck for investigation and reviewed capabilities"
+      >
+        <div class="stack-sources">
+          <span>
+            Prometheus <small>Metrics</small>
+          </span>
+          <span>
+            Zabbix / Orion <small>External alerts</small>
+          </span>
+          <span>
+            REST bridge <small>Connector contract</small>
+          </span>
+        </div>
+        <div class="stack-connectors" aria-hidden="true">
+          <i></i>
+          <i></i>
+          <i></i>
+        </div>
+        <div class="stack-core">
+          <Icon name="pulse" size={37} />
+          <strong>iCheck</strong>
+          <span>Evidence + AI Operator</span>
+        </div>
+        <div class="stack-output">
+          <span>→</span>
+          <div>
+            Reviewed next steps
+            <br />
+            <small>Tools · Workflows · Dashboards</small>
+          </div>
+        </div>
+      </div>
+      <div class="ecosystem-text">
+        <h3>Signals in. Context forward.</h3>
+        <p>
+          Use native monitoring templates or connect existing monitoring
+          sources. Map resources to your assets, then investigate with the
+          source and its scope still attached.
+        </p>
+        <ul>
+          <li>
+            <Icon name="check" size={17} />
+            Prometheus metrics and native Grafana dashboards
+          </li>
+          <li>
+            <Icon name="check" size={17} />
+            Zabbix, SolarWinds / Orion, and REST bridge support
+          </li>
+          <li>
+            <Icon name="check" size={17} />
+            Portable operation packages and MCP tools
+          </li>
+        </ul>
+        <a class="text-link" href="/docs/integrations/">
+          Read the integration guide
+          <Icon name="arrow" size={17} />
+        </a>
+        <p class="small-note">
+          Connector support is implemented in the preview. Live vendor
+          qualification remains environment-specific.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="preview-section">
+    <div class="container preview-grid">
+      <div>
+        <p class="eyebrow">
+          <span class="status-dot"></span>ENGINEERING PREVIEW
+        </p>
+        <h2>
+          A project you can
+          <br />
+          explore. And help shape.
+        </h2>
+        <p>
+          iCheck is being developed in public. Start with the docs, evaluate the
+          preview in a lab, and bring your real operational questions.
+        </p>
+        <a class="button button-primary" href="/docs/getting-started/">
+          Start exploring
+          <Icon name="arrow" size={18} />
+        </a>
+      </div>
+      <div class="preview-facts">
+        <div>
+          <span class="mono">DEPLOYMENT</span>
+          <strong>Your infrastructure, your instance.</strong>
+          <p>
+            Native Linux services, managed by systemd.
+            <br />
+            Fresh Ubuntu 24.04 x86_64 evaluation host.
+          </p>
+        </div>
+        <div>
+          <span class="mono">CURRENT STAGE</span>
+          <strong>Engineering Preview v0.1</strong>
+          <p>
+            Lab evaluation first. Production readiness and live environment
+            validation are separate steps.
+          </p>
+          <a class="text-link" href="/docs/preview-status/">
+            Read preview status
+            <Icon name="arrow" size={16} />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container faq-section section-pad">
+    <div>
+      <p class="eyebrow">A FEW USEFUL ANSWERS</p>
+      <h2>
+        Before you
+        <br />
+        get started.
+      </h2>
+      <a class="text-link" href="/docs/">
+        Browse the docs
+        <Icon name="arrow" size={17} />
+      </a>
+    </div>
+    <div class="faq-list">
+      {questions.map(({ q, a }) => (
+        <details>
+          <summary>
+            {q}
+            <span aria-hidden="true">+</span>
+          </summary>
+          <p>{a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+</Layout>

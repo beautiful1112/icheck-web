@@ -1,0 +1,294 @@
+---
+import Icon from "./Icon.astro";
+---
+
+<div class="demo" id="how-it-works">
+  <div class="demo-toolbar">
+    <span>
+      <span class="tiny-logo">
+        <Icon name="pulse" size={17} />
+      </span>
+      Operator workspace
+    </span>
+    <span class="demo-example">Illustrative walkthrough</span>
+  </div>
+  <div class="demo-layout">
+    <div
+      class="demo-sidebar"
+      role="tablist"
+      aria-label="Explore the iCheck workflow"
+      aria-orientation="vertical"
+    >
+      <button
+        id="tab-observe"
+        role="tab"
+        aria-selected="true"
+        aria-controls="panel-observe"
+        tabindex="0"
+      >
+        <span class="step-index">01</span>
+        <Icon name="pulse" size={18} />
+        Observe<span class="step-arrow">↗</span>
+      </button>
+      <button
+        id="tab-understand"
+        role="tab"
+        aria-selected="false"
+        aria-controls="panel-understand"
+        tabindex="-1"
+      >
+        <span class="step-index">02</span>
+        <Icon name="spark" size={18} />
+        Understand<span class="step-arrow">↗</span>
+      </button>
+      <button
+        id="tab-act"
+        role="tab"
+        aria-selected="false"
+        aria-controls="panel-act"
+        tabindex="-1"
+      >
+        <span class="step-index">03</span>
+        <Icon name="shield" size={18} />
+        Act<span class="step-arrow">↗</span>
+      </button>
+      <div class="demo-sidebar-note">
+        <span class="status-dot"></span>Evidence before action.
+        <br />
+        Human review built in.
+      </div>
+    </div>
+    <div class="demo-content">
+      <section
+        role="tabpanel"
+        id="panel-observe"
+        aria-labelledby="tab-observe"
+        tabindex="0"
+      >
+        <div class="demo-panel-heading">
+          <span class="mono">MONITORING / ALERT EVIDENCE</span>
+          <span class="sample-time">Sample incident</span>
+        </div>
+        <div class="incident-title">
+          <span class="incident-icon">!</span>
+          <div>
+            <h3>High interface utilization</h3>
+            <p>
+              edge-switch-01 <span> / </span> Gi0/1
+            </p>
+          </div>
+          <span class="warning-badge">Needs attention</span>
+        </div>
+        <div class="chart-heading">
+          <span>Interface utilization</span>
+          <span class="mono">Last 30 minutes</span>
+        </div>
+        <div
+          class="chart"
+          role="img"
+          aria-label="Illustrative interface utilization rises from 20 percent to above an 80 percent threshold."
+        >
+          <div class="chart-labels">
+            <span>100%</span>
+            <span>50%</span>
+            <span>0%</span>
+          </div>
+          <svg
+            viewBox="0 0 600 135"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient id="chart-fill" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stop-color="#72d8e8" stop-opacity=".25" />
+                <stop offset="100%" stop-color="#72d8e8" stop-opacity="0" />
+              </linearGradient>
+            </defs>
+            <path
+              d="M0 135V108L20 105 40 110 60 102 80 108 100 98 120 102 140 95 160 100 180 90 200 96 220 81 240 87 260 72 280 80 300 64 320 70 340 48 360 53 380 35 400 41 420 21 440 27 460 15 480 25 500 12 520 18 540 11 560 19 580 12 600 15V135Z"
+              fill="url(#chart-fill)"
+            />
+            <path
+              d="M0 108 20 105 40 110 60 102 80 108 100 98 120 102 140 95 160 100 180 90 200 96 220 81 240 87 260 72 280 80 300 64 320 70 340 48 360 53 380 35 400 41 420 21 440 27 460 15 480 25 500 12 520 18 540 11 560 19 580 12 600 15"
+              fill="none"
+              stroke="#72d8e8"
+              stroke-width="2.5"
+              vector-effect="non-scaling-stroke"
+            />
+            <path
+              d="M0 30H600"
+              stroke="#e5ad66"
+              stroke-dasharray="5 5"
+              stroke-opacity=".6"
+            />
+          </svg>
+        </div>
+        <div class="chart-times mono">
+          <span>10:00</span>
+          <span>10:15</span>
+          <span>10:30</span>
+        </div>
+        <div class="demo-evidence-row">
+          <span>
+            <i class="status-dot"></i>Source-attributed evidence
+          </span>
+          <button data-next="understand">
+            Investigate with AI <Icon name="arrow" size={15} />
+          </button>
+        </div>
+      </section>
+      <section
+        role="tabpanel"
+        id="panel-understand"
+        aria-labelledby="tab-understand"
+        tabindex="0"
+        hidden
+      >
+        <div class="demo-panel-heading">
+          <span class="mono">AI OPERATOR / INVESTIGATION</span>
+          <span class="sample-time">Read-only scope</span>
+        </div>
+        <div class="operator-question">“What changed on edge-switch-01?”</div>
+        <div class="operator-response">
+          <span class="ai-avatar">
+            <Icon name="spark" size={19} />
+          </span>
+          <div>
+            <h3>Follow the evidence.</h3>
+            <p>
+              Utilization is above the configured threshold. Review the metric
+              history and interface counters before drawing a conclusion.
+            </p>
+          </div>
+        </div>
+        <div class="evidence-list">
+          <div>
+            <span>
+              <Icon name="check" size={14} />
+              Metric history
+            </span>
+            <small>Prometheus · sample</small>
+          </div>
+          <div>
+            <span>
+              <Icon name="check" size={14} />
+              Interface counters
+            </span>
+            <small>Read-only tool · sample</small>
+          </div>
+          <div>
+            <span class="muted">○ Root cause</span>
+            <small>More evidence needed</small>
+          </div>
+        </div>
+        <div class="demo-evidence-row">
+          <span>Unknowns stay visible.</span>
+          <button data-next="act">
+            Review next step <Icon name="arrow" size={15} />
+          </button>
+        </div>
+      </section>
+      <section
+        role="tabpanel"
+        id="panel-act"
+        aria-labelledby="tab-act"
+        tabindex="0"
+        hidden
+      >
+        <div class="demo-panel-heading">
+          <span class="mono">REVIEW / PROPOSED NEXT STEP</span>
+          <span class="sample-time">Awaiting review</span>
+        </div>
+        <div class="review-heading">
+          <span class="ai-avatar">
+            <Icon name="shield" size={22} />
+          </span>
+          <div>
+            <h3>You decide what happens next.</h3>
+            <p>Review the target, scope, and proposed operation.</p>
+          </div>
+        </div>
+        <dl class="review-details">
+          <div>
+            <dt>Operation</dt>
+            <dd>Collect interface status</dd>
+          </div>
+          <div>
+            <dt>Target</dt>
+            <dd>edge-switch-01 / Gi0/1</dd>
+          </div>
+          <div>
+            <dt>Access</dt>
+            <dd>
+              <span class="read-badge">Read-only</span>
+            </dd>
+          </div>
+          <div>
+            <dt>Capability</dt>
+            <dd>Reviewed MCP tool</dd>
+          </div>
+        </dl>
+        <div class="demo-review-note">
+          <Icon name="shield" size={16} />
+          <p>
+            This is an example, with no live connection. In iCheck, permissions
+            and approved scope govern tool use.
+          </p>
+        </div>
+        <div class="demo-evidence-row">
+          <span>No operation runs on this site.</span>
+          <a href="/docs/ai-operator/">
+            Explore AI Operator <Icon name="arrow" size={15} />
+          </a>
+        </div>
+      </section>
+    </div>
+  </div>
+  <div class="demo-bottom">
+    <span>
+      <span class="status-dot"></span>iCheck Engineering Preview
+    </span>
+    <span>Observe. Understand. Act.</span>
+  </div>
+</div>
+<script>
+  const demo = document.querySelector(".demo");
+  const tabs = [
+    ...(demo?.querySelectorAll<HTMLButtonElement>('[role="tab"]') ?? []),
+  ];
+  const panels = [
+    ...(demo?.querySelectorAll<HTMLElement>('[role="tabpanel"]') ?? []),
+  ];
+  function selectTab(tab: HTMLButtonElement, focus = false) {
+    tabs.forEach((item) => {
+      const selected = item === tab;
+      item.setAttribute("aria-selected", String(selected));
+      item.tabIndex = selected ? 0 : -1;
+    });
+    panels.forEach((panel) => {
+      panel.hidden = panel.id !== tab.getAttribute("aria-controls");
+    });
+    if (focus) tab.focus();
+  }
+  tabs.forEach((tab, index) => {
+    tab.addEventListener("click", () => selectTab(tab));
+    tab.addEventListener("keydown", (event) => {
+      let next = index;
+      if (event.key === "ArrowDown" || event.key === "ArrowRight")
+        next = (index + 1) % tabs.length;
+      else if (event.key === "ArrowUp" || event.key === "ArrowLeft")
+        next = (index - 1 + tabs.length) % tabs.length;
+      else if (event.key === "Home") next = 0;
+      else if (event.key === "End") next = tabs.length - 1;
+      else return;
+      event.preventDefault();
+      selectTab(tabs[next], true);
+    });
+  });
+  demo?.querySelectorAll<HTMLButtonElement>("[data-next]").forEach((button) =>
+    button.addEventListener("click", () => {
+      const tab = tabs.find((item) => item.id === `tab-${button.dataset.next}`);
+      if (tab) selectTab(tab, true);
+    }),
+  );
+</script>
